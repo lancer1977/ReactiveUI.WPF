@@ -1,6 +1,14 @@
 # ReactiveUI.WPF
 A project focused on ReactiveUI.WPF.
 
+## Tags
+
+- reactive-ui-wpf
+- ui
+- docs
+- reactive
+- desktop
+
 ## Overview
 This repository contains the ReactiveUI.WPF project. It is designed to provide robust functionality and seamless integration within its ecosystem.
 
