@@ -5,8 +5,8 @@
 
 using System.Reactive.Disposables;
 using System.Threading;
-using System.Windows.Controls;
 using System.Windows.Forms;
+using Control = System.Windows.Forms.Control;
 
 namespace System.Reactive.Concurrency;
 
@@ -94,7 +94,7 @@ public class ControlScheduler : LocalScheduler, ISchedulerPeriodic
         {
             var d = new MultipleAssignmentDisposable();
 
-            var timer = new  Timer();
+            var timer = new System.Windows.Forms.Timer();
 
             timer.Tick += (s, e) =>
             {

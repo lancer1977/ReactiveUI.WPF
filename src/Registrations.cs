@@ -5,6 +5,7 @@
 
 using System;
 using System.Reactive.Concurrency;
+using ReactiveUI;
 using Splat;
 
 namespace ReactiveUI.Wpf;
@@ -15,24 +16,23 @@ namespace ReactiveUI.Wpf;
 public class Registrations : IWantsToRegisterStuff
 {
     /// <inheritdoc/>
-    public void Register(Action<Func<object>, Type> registerFunction)
+    public void Register(IRegistrar registrar)
     {
-        if (registerFunction is null)
+        if (registrar is null)
         {
-            throw new ArgumentNullException(nameof(registerFunction));
+            throw new ArgumentNullException(nameof(registrar));
         }
 
-        registerFunction(() => new PlatformOperations(), typeof(IPlatformOperations));
-
-        registerFunction(() => new ActivationForViewFetcher(), typeof(IActivationForViewFetcher));
-        registerFunction(() => new DependencyObjectObservableForProperty(), typeof(ICreatesObservableForProperty));
-        registerFunction(() => new StringConverter(), typeof(IBindingTypeConverter));
-        registerFunction(() => new SingleToStringTypeConverter(), typeof(IBindingTypeConverter));
-        registerFunction(() => new DoubleToStringTypeConverter(), typeof(IBindingTypeConverter));
-        registerFunction(() => new DecimalToStringTypeConverter(), typeof(IBindingTypeConverter));
-        registerFunction(() => new BooleanToVisibilityTypeConverter(), typeof(IBindingTypeConverter));
-        registerFunction(() => new AutoDataTemplateBindingHook(), typeof(IPropertyBindingHook));
-        registerFunction(() => new ComponentModelTypeConverter(), typeof(IBindingTypeConverter));
+        registrar.Register<IPlatformOperations>(() => new PlatformOperations());
+        registrar.Register<IActivationForViewFetcher>(() => new ActivationForViewFetcher());
+        registrar.Register<ICreatesObservableForProperty>(() => new DependencyObjectObservableForProperty());
+        registrar.Register<IBindingTypeConverter>(() => new StringConverter());
+        registrar.Register<IBindingTypeConverter>(() => new SingleToStringTypeConverter());
+        registrar.Register<IBindingTypeConverter>(() => new DoubleToStringTypeConverter());
+        registrar.Register<IBindingTypeConverter>(() => new DecimalToStringTypeConverter());
+        registrar.Register<IBindingTypeConverter>(() => new BooleanToVisibilityTypeConverter());
+        registrar.Register<IPropertyBindingHook>(() => new AutoDataTemplateBindingHook());
+        registrar.Register<IBindingTypeConverter>(() => new ComponentModelFallbackConverter());
 
         if (!ModeDetector.InUnitTestRunner())
         {
